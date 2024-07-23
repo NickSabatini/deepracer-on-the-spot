@@ -16,6 +16,8 @@ def reward_function(params):
 
     step_reward = (progress / steps) * 10
 
+    reward += step_reward
+
     # Steering penality threshold, change the number based on your action space setting
     STEERING_THRESHOLD = 20
 
