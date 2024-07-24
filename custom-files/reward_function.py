@@ -4,21 +4,17 @@ def reward_function(params):
     '''
     
     # Read input parameters
-    distance_from_center = params['distance_from_center']
-    track_width = params['track_width']
-
     steering = abs(params['steering_angle']) # Only need the absolute steering angle
     speed = params['speed']
-
     steps = params['steps']
     progress = params['progress']
-
     all_wheels_on_track = params['all_wheels_on_track']
+    is_offtrack = params['is_offtrack']
 
     reward = 1e-3
 
+    # Progress per step reward is large, this is a proxy for quick completion of the track
     step_reward = (progress / steps) * 10
-
     reward += step_reward
 
     # Steering penality threshold, change the number based on your action space setting
@@ -37,5 +33,8 @@ def reward_function(params):
 
     if not all_wheels_on_track:
         reward *= 0.2
+
+    if is_offtrack:
+        reward = 1e-3
 
     return float(reward)
