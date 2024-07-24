@@ -36,6 +36,6 @@ def reward_function(params):
         reward *= 0.8
 
     if not all_wheels_on_track:
-        reward *= 0.5
+        reward *= 0.2
 
     return float(reward)
