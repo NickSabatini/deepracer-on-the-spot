@@ -6,29 +6,36 @@ def reward_function(params):
     # Read input parameters
     distance_from_center = params['distance_from_center']
     track_width = params['track_width']
-    steering = abs(params['steering_angle']) # Only need the absolute steering angle
 
     progress = params['progress']
+    steps = params['steps']
     speed = params['speed']
     all_wheels_on_track = params['all_wheels_on_track']
+    steering = abs(params['steering_angle'])
 
     reward = 1
 
-    # Progress
-    reward += (progress / 100) * 4
+    # add reward for low steering angle
+    if steering < 15:
+        reward += 1
+
+    # Progress (each checkpoint has the potential to give 10 times ratio of progress to current steps)
+    # This happens at every 10% checkpoint of the track
+    if progress % 10 == 0:
+        reward += 10 * progress / steps
 
     # reward for speed (0-2)
     reward += speed * 0.5
 
     # distance from center line reward
-    center_reward = (1 - (distance_from_center/(track_width*0.5))**2) * 10
+    center_reward = (1 - (distance_from_center/(track_width*0.5)) ** (0.6)) * 10
     reward += center_reward
 
     # reward for finishing the track
     if progress >= 100:
         reward += 100
 
-    if not all_wheels_on_track:
+    if (not all_wheels_on_track) or (distance_from_center/(track_width*0.5)) > 0.8:
         reward = 1e-3
 
     return float(reward)
