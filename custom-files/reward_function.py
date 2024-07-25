@@ -20,10 +20,10 @@ def reward_function(params):
     reward += (progress / 100) * 4
 
     # reward for speed (0-4)
-    reward += speed
+    reward += speed * 0.5
 
     # distance from center line reward
-    center_reward = (1 - (distance_from_center/(track_width*0.5))**2) * 4
+    center_reward = (1 - (distance_from_center/(track_width*0.5))**2) * 10
     reward += center_reward
 
     # reward for finishing the track
