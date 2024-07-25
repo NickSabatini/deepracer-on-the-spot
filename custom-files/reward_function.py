@@ -13,22 +13,25 @@ def reward_function(params):
 
     reward = 1
 
-    # add reward for low steering angle
+    # reward for not oversteering
     if steering < 15:
         reward += 1
 
-    # reward for speed (0-2)
+    # reward for staying in high speed range
     if speed > 1.5:
         reward += 1
 
-    # Progress (each 10% checkpoint gives 10 times ratio of progress to current steps)
+    # Speedy track completion reward (reward high ratio of progress to steps)
     reward += 10 * progress / steps
 
+    # Contiguous track completion reward (avoid crashing and reseting progress)
+    reward += progress / 10
+
     # distance from center line reward
-    center_reward = (1 - (distance_from_center/(track_width*0.5)) ** (0.6)) * 10
+    center_reward = (1 - (distance_from_center/(track_width*0.5)) ** 2) * 10
     reward += center_reward
 
-    # reward for finishing the track
+    # reward for finishing the track without crashing
     if progress >= 100:
         reward += 1000
 
