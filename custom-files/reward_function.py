@@ -18,11 +18,11 @@ def reward_function(params):
         reward += 1
 
     # reward for speed (0-2)
-    reward += speed * 0.5
+    if speed > 1.5:
+        reward += 1
 
     # Progress (each 10% checkpoint gives 10 times ratio of progress to current steps)
-    if math.ceil(progress) % 10 == 0:
-        reward += 10 * progress / steps
+    reward += 10 * progress / steps
 
     # distance from center line reward
     center_reward = (1 - (distance_from_center/(track_width*0.5)) ** (0.6)) * 10
@@ -30,7 +30,7 @@ def reward_function(params):
 
     # reward for finishing the track
     if progress >= 100:
-        reward += 100
+        reward += 1000
 
     if (not all_wheels_on_track) or (distance_from_center/(track_width*0.5)) > 0.8:
         reward = 1e-3
