@@ -8,6 +8,10 @@ def reward_function(params):
     track_width = params['track_width']
     steering = abs(params['steering_angle']) # Only need the absolute steering angle
 
+    progress = params['progress']
+    speed = params['speed']
+    all_wheels_on_track = params['all_wheels_on_track']
+
     reward = 1
 
     # Progress
