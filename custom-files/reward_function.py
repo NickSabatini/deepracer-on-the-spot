@@ -22,24 +22,21 @@ def reward_function(params):
     if speed > 1.5:
         reward += 1
 
+    # distance from center line reward
+    if distance_from_center/(track_width*0.5) < 0.5:
+        reward += 5
+
     # Speedy track completion reward (reward high ratio of progress to steps)
     reward += 10 * progress / steps
 
     # Contiguous track completion reward (avoid crashing and reseting progress)
     reward += progress / 10
 
-    # distance from center line reward
-    if distance_from_center/(track_width*0.5) < 0.5:
-        reward += 5
-
     # reward for getting across finish without crashing
     if progress >= 100:
         reward += 1000
 
-    # reward for getting through halfway curve
-    if progress >= 45:
-        reward += 5
-
+    # reward for staying on the track
     if (not all_wheels_on_track):
         reward = 1e-3
 
