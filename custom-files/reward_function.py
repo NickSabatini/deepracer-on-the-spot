@@ -37,8 +37,8 @@ def reward_function(params):
         reward += 1000
 
     # reward for getting through halfway curve
-    if progress >= 45 and progress <= 60:
-        reward += 10
+    if progress >= 45:
+        reward += 5
 
     if (not all_wheels_on_track):
         reward = 1e-3
