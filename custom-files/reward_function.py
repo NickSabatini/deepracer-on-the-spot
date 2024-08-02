@@ -26,9 +26,6 @@ def reward_function(params):
     if distance_from_center/(track_width*0.5) < 0.5:
         reward += 5
 
-    # Speedy track completion reward (reward high ratio of progress to steps)
-    reward += 10 * progress / steps
-
     # Contiguous track completion reward (avoid crashing and reseting progress)
     reward += progress / 10
 
