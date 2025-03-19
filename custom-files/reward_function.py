@@ -22,6 +22,7 @@ def reward_function(params):
     if speed > 1.5:
         reward += 1
 
+
     # distance from center line reward
     if distance_from_center/(track_width*0.5) < 0.5:
         reward += 5
